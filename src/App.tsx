@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SignIn from "./component/SignIn";
+import { ThemeProvider, createTheme } from "@mui/material";
+import colors from "./globals/colors";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./component/Layout";
+import Home from "./component/Home";
+import { Toast } from "./component/Shared/Toaster";
+
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: colors.white,
+    },
+    secondary: {
+      main: colors.gold,
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/Login" element={<SignIn />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <Toast />
+    </ThemeProvider>
   );
 }
 
