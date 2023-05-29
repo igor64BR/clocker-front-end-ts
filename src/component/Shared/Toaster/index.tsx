@@ -1,16 +1,16 @@
-import { ToastOptions, toast, Flip, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { type ToastOptions, toast, Flip, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const toastConfigs = {
-  position: "bottom-right",
+const toastConfigs: ToastOptions<any> = {
+  position: 'bottom-right',
   autoClose: 5000,
   hideProgressBar: true,
   closeOnClick: true,
   draggable: true,
   progress: undefined,
-  theme: "dark",
+  theme: 'dark',
   transition: Flip,
-} as ToastOptions<{}>;
+};
 
 export const toastEmitter = {
   error: (error: string) => toast.error(error, toastConfigs),

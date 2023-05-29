@@ -1,75 +1,86 @@
-import { Storager } from "./StorageManager";
-import { toastEmitter } from "../component/Shared/Toaster";
+import { Storager } from './StorageManager';
+import { toastEmitter } from '../component/Shared/Toaster';
 
-interface ResponseData { 
-  data?: any, 
-  errors?: string[] 
+interface ResponseData {
+  data?: any;
+  errors?: string[];
 }
 
-export class Api {
-  static apiUrl: string = "https://localhost:44379/";
+const apiUrl: string = 'https://localhost:44379/';
 
-  private static getApiUrl = (endpoint: string) => this.apiUrl + endpoint;
+export const Api = {
+  apiUrl,
+  get,
+  post,
+  put,
+  del,
+};
 
-  static get = (
-    endpoint: string, 
-    setData: (data: any) => void, 
-    setIsLoading?: (isLoading: boolean) => void
-  ) => this.sendRequest("GET", endpoint, null, setData, setIsLoading);
+const getApiUrl = (endpoint: string) => apiUrl + endpoint;
 
-  static post = (
-    endpoint: string, 
-    body: any,
-    setData: (data: any) => void, 
-    setIsLoading?: (isLoading: boolean) => void
-  ) => this.sendRequest("POST", endpoint, body, setData, setIsLoading);
+async function get(
+  endpoint: string,
+  setData: (data: any) => void,
+  setIsLoading?: (isLoading: boolean) => void,
+) {
+  await sendRequest('GET', endpoint, null, setData, setIsLoading);
+}
 
-  static put = (
-    endpoint: string, 
-    body: any, 
-    setData: (data: any) => void, 
-    setIsLoading?: (isLoading: boolean) => void
-  ) => this.sendRequest("PUT", endpoint, body, setData, setIsLoading);
+async function post(
+  endpoint: string,
+  body: any,
+  setData: (data: any) => void,
+  setIsLoading?: (isLoading: boolean) => void,
+) {
+  await sendRequest('POST', endpoint, body, setData, setIsLoading);
+}
 
-  static delete = (
-    endpoint: string, 
-    body: any, 
-    setData: (data: any) => void, 
-    setIsLoading?: (isLoading: boolean) => void
-  ) => this.sendRequest("DELETE", endpoint, body, setData, setIsLoading);
+async function put(
+  endpoint: string,
+  body: any,
+  setData: (data: any) => void,
+  setIsLoading?: (isLoading: boolean) => void,
+) {
+  await sendRequest('PUT', endpoint, body, setData, setIsLoading);
+}
 
-  static sendRequest(
-    method: string, 
-    endpoint: string, 
-    body: any | null,
-    setData: (data: ResponseData) => void, 
-    setIsLoading?: (isLoading: boolean) => void
-  ) {
-    const token = Storager.token.get();
+async function del(
+  endpoint: string,
+  body: any,
+  setData: (data: any) => void,
+  setIsLoading?: (isLoading: boolean) => void,
+) {
+  await sendRequest('DELETE', endpoint, body, setData, setIsLoading);
+}
 
-    if (setIsLoading)
-      setIsLoading(true);
+async function sendRequest(
+  method: string,
+  endpoint: string,
+  body: any | null,
+  setData: (data: ResponseData) => void,
+  setIsLoading?: (isLoading: boolean) => void,
+) {
+  const token = Storager.token.get();
 
-    fetch(
-      this.getApiUrl(endpoint), 
-      {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token
-            ? `Bearer ${token}`
-            : null,
-        } as HeadersInit,
-        body: body ? JSON.stringify(body) : null,
-      })
-      .then((response: any) => {
-        if (response.ok) return response.json();
-        throw new Error(response.errors);
-      })
-      .then((data: ResponseData) => setData(data.data))
-      .catch((errors) => {
-        if (errors instanceof TypeError) toastEmitter.error("Ocorreu um erro inesperado");
-      })
-      .finally(() => setIsLoading && setIsLoading(false));
+  setIsLoading?.(true);
+
+  try {
+    const response = await fetch(getApiUrl(endpoint), {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+      body: body ? JSON.stringify(body) : null,
+    });
+
+    const data: ResponseData = await response.json();
+
+    if (response.ok) setData(data.data);
+    else data.errors?.forEach((error) => toastEmitter.error(error));
+  } catch (errors) {
+    if (errors instanceof TypeError) toastEmitter.error('Ocorreu um erro inesperado');
   }
+
+  setIsLoading?.(false);
 }

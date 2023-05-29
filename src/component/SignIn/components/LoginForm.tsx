@@ -1,23 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { LockOutlined } from "@mui/icons-material";
-import Copyright from "./Copyright";
-import React, { useEffect, useState } from "react";
-import colors from "../../../globals/colors";
-import LoginInput from "./LoginInput";
-import { Storager } from "../../../globals/StorageManager";
-import AuxLinks from "./AuxLinks";
-import RememberMe from "./RememberMe";
-import { Api } from "../../../globals/Api";
-import { useNavigate } from "react-router-dom";
+import { Avatar, Box, Button, CircularProgress, Grid, Paper, Typography } from '@mui/material';
+import { LockOutlined } from '@mui/icons-material';
+import Copyright from './Copyright';
+import React, { useEffect, useState } from 'react';
+import colors from '../../../globals/colors';
+import LoginInput from './LoginInput';
+import { Storager } from '../../../globals/StorageManager';
+import AuxLinks from './AuxLinks';
+import RememberMe from './RememberMe';
+import { Api } from '../../../globals/Api';
+import { useNavigate } from 'react-router-dom';
 
 interface Data {
   user: {
@@ -33,11 +25,11 @@ export default function LoginForm() {
 
   const [data, setData] = useState<Data | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState(
-    (userIsRemembered && storedUser?.email) || ""
+  const [email, setEmail] = useState<string>(
+    userIsRemembered && storedUser?.email ? storedUser.email : '',
   );
-  const [password, setPassword] = useState("");
-  const [rememberUser, setRememberUser] = useState(userIsRemembered || false);
+  const [password, setPassword] = useState('');
+  const [rememberUser, setRememberUser] = useState(userIsRemembered ?? false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,27 +40,16 @@ export default function LoginForm() {
     if (rememberUser) Storager.user.set({ email });
     else Storager.user.clear();
 
-    Storager.token.set(data!.token);
-    navigate("/");
+    Storager.token.set(data.token);
+    navigate('/');
   }, [data]);
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Api.post(
-      "Authorization/login",
-      {
-        email: email,
-        password: password,
-      },
-      setData,
-      setIsLoading
-    );
+    Api.post('Authorization/login', { email, password }, setData, setIsLoading);
   };
 
-  const handleRememberMeChange = (
-    _: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => {
+  const handleRememberMeChange = (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     Storager.rememberUser.set(checked);
     setRememberUser(checked);
   };
@@ -85,51 +66,51 @@ export default function LoginForm() {
       sx={{
         bgcolor: colors.black,
         color: colors.white,
-        display: "flex",
-        justifyContent: "center",
+        display: 'flex',
+        justifyContent: 'center',
       }}
     >
       <Box
         sx={{
           my: 8,
           mx: 4,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlined />
         </Avatar>
 
-        <Typography component="h1" variant="h5">
+        <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
 
-        <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 1 }}>
+        <Box component='form' noValidate onSubmit={handleLogin} sx={{ mt: 1 }}>
           <LoginInput
             value={email}
             onChange={({ target }) => setEmail(target.value)}
-            type="email"
-            label="Email"
+            type='email'
+            label='Email'
           />
 
           <LoginInput
             value={password}
             onChange={({ target }) => setPassword(target.value)}
-            type="password"
-            label="Senha"
+            type='password'
+            label='Senha'
           />
 
           <RememberMe onChange={handleRememberMeChange} value={rememberUser} />
 
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
+            variant='contained'
             sx={{ mt: 3, mb: 2, height: 60 }}
-            color="secondary"
+            color='secondary'
           >
             {isLoading ? <CircularProgress /> : <Typography>Entrar</Typography>}
           </Button>
