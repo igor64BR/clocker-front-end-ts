@@ -1,6 +1,6 @@
-import { FormControlLabel, Checkbox } from "@mui/material";
-import React from "react";
-import colors from "../../../globals/colors";
+import { FormControlLabel, Checkbox } from '@mui/material';
+import React from 'react';
+import colors from '../../../globals/colors';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
@@ -15,13 +15,13 @@ export default function RememberMe({ onChange, value }: Props) {
           value={value}
           checked={value}
           onChange={onChange}
-          color="secondary"
+          color='secondary'
           sx={{
             color: colors.gold,
           }}
         />
       }
-      label="Remember me"
+      label='Remember me'
     />
   );
 }

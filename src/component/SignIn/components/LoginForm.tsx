@@ -46,7 +46,7 @@ export default function LoginForm() {
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Api.post('Authorization/login', { email, password }, setData, setIsLoading);
+    void Api.post('Authorization/login', { email, password }, setData, setIsLoading);
   };
 
   const handleRememberMeChange = (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {

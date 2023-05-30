@@ -14,18 +14,18 @@ class BaseStorageManager<T> {
       const parsedValue = JSON.parse(stringValue) as T;
 
       return parsedValue;
-    } catch(error: any) {
+    } catch (error: any) {
       console.log(error);
       return undefined;
     }
   };
 
-  set = (value: T) => (localStorage.setItem(this.key, JSON.stringify(value)));
-  clear = (): void => (localStorage.removeItem(this.key));
+  set = (value: T) => localStorage.setItem(this.key, JSON.stringify(value));
+  clear = (): void => localStorage.removeItem(this.key);
 }
 
 class TokenStorageManager extends BaseStorageManager<string> {
-  get = (): string | undefined  => {
+  get = (): string | undefined => {
     try {
       const stringValue = localStorage.getItem(this.key);
 
@@ -45,11 +45,11 @@ class TokenStorageManager extends BaseStorageManager<string> {
     } catch (error: any) {
       return undefined;
     }
-  }
+  };
 }
 
-export class Storager {
-  static token = new TokenStorageManager("token");
-  static rememberUser = new BaseStorageManager<boolean>("rememberUser");
-  static user = new BaseStorageManager<{ email: string }>("user");
-} 
+export const Storager = {
+  token: new TokenStorageManager('token'),
+  rememberUser: new BaseStorageManager<boolean>('rememberUser'),
+  user: new BaseStorageManager<{ email: string }>('user'),
+};

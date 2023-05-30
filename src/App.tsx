@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './component/Layout';
 import Home from './component/Home';
 import { Toast } from './component/Shared/Toaster';
+import UserList from './component/UserList';
 
 const defaultTheme = createTheme({
   palette: {
@@ -25,6 +26,7 @@ function App() {
           <Route path='/Login' element={<SignIn />} />
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path='Users' element={<UserList />} />
           </Route>
         </Routes>
       </BrowserRouter>

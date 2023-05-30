@@ -1,12 +1,10 @@
-import { TextField } from "@mui/material";
-import React from "react";
-import colors from "../../../globals/colors";
+import { TextField } from '@mui/material';
+import React from 'react';
+import colors from '../../../globals/colors';
 
 interface Props {
   value: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   type?: string;
   label: string;
 }
@@ -14,7 +12,7 @@ interface Props {
 export default function LoginInput({ value, onChange, type, label }: Props) {
   return (
     <TextField
-      margin="normal"
+      margin='normal'
       required
       fullWidth
       id={label}
@@ -23,7 +21,7 @@ export default function LoginInput({ value, onChange, type, label }: Props) {
       autoFocus
       onChange={onChange}
       value={value}
-      color="primary"
+      color='primary'
       type={type}
       inputProps={{
         style: {
