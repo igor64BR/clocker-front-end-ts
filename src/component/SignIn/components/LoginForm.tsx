@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Avatar, Box, Button, CircularProgress, Grid, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import Copyright from './Copyright';
 import React, { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import AuxLinks from './AuxLinks';
 import RememberMe from './RememberMe';
 import { Api } from '../../../globals/Api';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../Shared/Loading';
 
 interface Data {
   user: {
@@ -112,7 +113,7 @@ export default function LoginForm() {
             sx={{ mt: 3, mb: 2, height: 60 }}
             color='secondary'
           >
-            {isLoading ? <CircularProgress /> : <Typography>Entrar</Typography>}
+            {isLoading ? <Loading color='primary' /> : <Typography>Entrar</Typography>}
           </Button>
 
           <AuxLinks />

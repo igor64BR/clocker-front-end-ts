@@ -26,6 +26,14 @@ class BaseStorageManager<T> {
 
 class TokenStorageManager extends BaseStorageManager<string> {
   get = (): string | undefined => {
+    const stringValue = localStorage.getItem(this.key);
+
+    if (!stringValue) return undefined;
+
+    return stringValue;
+  };
+
+  getDetailed = (): string | undefined => {
     try {
       const stringValue = localStorage.getItem(this.key);
 
@@ -46,6 +54,8 @@ class TokenStorageManager extends BaseStorageManager<string> {
       return undefined;
     }
   };
+
+  set = (value: string) => localStorage.setItem(this.key, value);
 }
 
 export const Storager = {

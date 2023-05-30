@@ -3,6 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import logo from '../../../../../assets/img/logo-no-name.png';
 import colors from '../../../../../globals/colors';
 import { userButtons } from '../pages';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   onOpen: (event: React.MouseEvent<HTMLElement>) => void;
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export default function CustomAvatar({ onOpen, onClose, isOpen, anchorEl }: Props) {
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title='Abrir opções de perfil'>
@@ -40,9 +43,15 @@ export default function CustomAvatar({ onOpen, onClose, isOpen, anchorEl }: Prop
         open={isOpen}
         onClose={onClose}
       >
-        {userButtons.map((setting) => (
-          <MenuItem key={setting.name} onClick={onClose}>
-            <Typography textAlign='center'>{setting.name}</Typography>
+        {userButtons.map((button) => (
+          <MenuItem
+            key={button.name}
+            onClick={() => {
+              onClose();
+              navigate(button.destination);
+            }}
+          >
+            <Typography textAlign='center'>{button.name}</Typography>
           </MenuItem>
         ))}
       </Menu>
