@@ -7,6 +7,7 @@ import Home from './component/Home';
 import { Toast } from './component/Shared/Toaster';
 import UserList from './component/UserList';
 import SignOut from './component/SignOut';
+import AppRoutes from './AppRoutes';
 
 const defaultTheme = createTheme({
   palette: {
@@ -22,16 +23,7 @@ const defaultTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/Login' element={<SignIn />} />
-          <Route path='/Logout' element={<SignOut />} />
-          <Route path='/' element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path='Users' element={<UserList />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AppRoutes />
       <Toast />
     </ThemeProvider>
   );

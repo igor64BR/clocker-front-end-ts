@@ -18,7 +18,6 @@ function Navbar() {
           paddingLeft: '1%',
           paddingRight: '1%',
           margin: 1,
-          //   width: '100%',
         }}
       >
         <Toolbar
