@@ -1,18 +1,21 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Add, Delete, Edit } from '@mui/icons-material';
+import ImageIcon from '@mui/icons-material/Image';
+import { Divider, IconButton, Stack } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
-import colors from '../../globals/colors';
-import { Divider, IconButton, Stack } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
-import Loading from '../../sharedComponents/Loading';
+import ListItemText from '@mui/material/ListItemText';
+
 import { Api } from '../../globals/Api';
-import { useNavigate } from 'react-router-dom';
-import SearchBox from './components/SearchBox';
+import colors from '../../globals/colors';
 import { scrollBarConfigs } from '../../globals/ScrollBarConfigs';
+import IconedButton from '../../sharedComponents/IconedButton';
+import Loading from '../../sharedComponents/Loading';
+import SearchBox from './components/SearchBox';
 
 class User {
   id: string;
@@ -46,7 +49,11 @@ export default function UserList() {
             <IconButton edge='end' aria-label='delete' onClick={() => navigate('./Form/' + u.id)}>
               <Edit />
             </IconButton>
-            <IconButton edge='end' aria-label='delete'>
+            <IconButton
+              edge='end'
+              aria-label='delete'
+              onClick={() => navigate('./Delete/' + u.id.toString())}
+            >
               <Delete />
             </IconButton>
           </Stack>
@@ -66,20 +73,23 @@ export default function UserList() {
 
   return (
     <Stack direction='column' width={'100%'} height={'100%'} justifyContent={'space-evenly'}>
-      <SearchBox />
-      <>
-        <Divider sx={{ bgcolor: colors.gold }} />
-        <List
-          sx={{
-            width: '100%',
-            height: '90%',
-            overflow: 'auto',
-            ...scrollBarConfigs(),
-          }}
-        >
-          {users}
-        </List>
-      </>
+      <Stack direction='row' alignItems='center'>
+        <IconedButton label='Adicionar' onClick={() => navigate('./Form')}>
+          <Add color='secondary' fontSize='small' />
+        </IconedButton>
+        <SearchBox />
+      </Stack>
+      <Divider sx={{ bgcolor: colors.gold }} />
+      <List
+        sx={{
+          width: '100%',
+          height: '90%',
+          overflow: 'auto',
+          ...scrollBarConfigs(),
+        }}
+      >
+        {users}
+      </List>
     </Stack>
   );
 }
