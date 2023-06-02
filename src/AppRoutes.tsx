@@ -1,10 +1,10 @@
-import SignIn from './component/SignIn';
+import SignIn from './pages/SignIn';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Layout from './component/Layout';
-import Home from './component/Home';
-import UserList from './component/UserList';
-import SignOut from './component/SignOut';
-import UserForm from './component/UserForm';
+import Layout from './pages/Layout';
+import Home from './pages/Home';
+import UserList from './pages/UserList';
+import SignOut from './pages/SignOut';
+import UserForm from './pages/UserForm';
 
 export default function AppRoutes() {
   return (

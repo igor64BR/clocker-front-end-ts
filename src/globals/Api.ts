@@ -1,5 +1,5 @@
 import { Storager } from './StorageManager';
-import { toastEmitter } from '../component/Shared/Toaster';
+import { toastEmitter } from '../sharedComponents/Toaster';
 
 interface ResponseData {
   data?: any;

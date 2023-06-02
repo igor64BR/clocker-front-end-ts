@@ -8,7 +8,7 @@ import colors from '../../globals/colors';
 import { Divider, IconButton, Stack } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
-import Loading from '../Shared/Loading';
+import Loading from '../../sharedComponents/Loading';
 import { Api } from '../../globals/Api';
 import { useNavigate } from 'react-router-dom';
 import SearchBox from './components/SearchBox';

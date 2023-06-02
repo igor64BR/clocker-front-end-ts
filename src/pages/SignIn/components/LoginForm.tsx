@@ -10,7 +10,7 @@ import AuxLinks from './AuxLinks';
 import RememberMe from './RememberMe';
 import { Api } from '../../../globals/Api';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../../Shared/Loading';
+import Loading from '../../../sharedComponents/Loading';
 
 interface Data {
   user: {
