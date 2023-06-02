@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
 import Loading from '../Shared/Loading';
 import { Api } from '../../globals/Api';
 import { useNavigate } from 'react-router-dom';
+import SearchBox from './components/SearchBox';
+import { scrollBarConfigs } from '../../globals/ScrollBarConfigs';
 
 class User {
   id: string;
@@ -36,17 +38,8 @@ export default function UserList() {
 
   if (isLoading) return <Loading />;
 
-  const mock: User[] = [];
-
-  for (let i = 0; i < 100; i++) {
-    const id = i.toString();
-    mock.push(new User(id, 'user' + id, 'user' + id + '@gmail.com'));
-  }
-
-  const users = mock.map((u, i) => (
+  const users = data.map((u, i) => (
     <Stack key={i} direction={'column'}>
-      <Divider sx={{ bgcolor: colors.gold }} />
-
       <ListItem
         secondaryAction={
           <Stack direction={'row'} spacing={2}>
@@ -71,5 +64,22 @@ export default function UserList() {
     </Stack>
   ));
 
-  return <List sx={{ width: '100%', height: '90%' }}>{users}</List>;
+  return (
+    <Stack direction='column' width={'100%'} height={'100%'} justifyContent={'space-evenly'}>
+      <SearchBox />
+      <>
+        <Divider sx={{ bgcolor: colors.gold }} />
+        <List
+          sx={{
+            width: '100%',
+            height: '90%',
+            overflow: 'auto',
+            ...scrollBarConfigs(),
+          }}
+        >
+          {users}
+        </List>
+      </>
+    </Stack>
+  );
 }
