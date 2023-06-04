@@ -5,7 +5,6 @@ import DeleteUser from './pages/InstantPages/DeleteUser';
 import Layout from './pages/Layout';
 import SignIn from './pages/SignIn';
 import SignOut from './pages/SignOut';
-import UserForm from './pages/UserForm';
 import UserList from './pages/UserList';
 
 export default function AppRoutes() {
@@ -18,7 +17,6 @@ export default function AppRoutes() {
           <Route index element={<Home />} />
           <Route path='Users/'>
             <Route index element={<UserList />} />
-            <Route path='Form/:id' element={<UserForm />} />
             <Route path='Delete/:id' element={<DeleteUser />} />
           </Route>
         </Route>

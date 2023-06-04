@@ -1,16 +1,17 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Avatar, Box, Button, Grid, Paper, Typography } from '@mui/material';
-import { LockOutlined } from '@mui/icons-material';
-import Copyright from './Copyright';
 import React, { useEffect, useState } from 'react';
-import colors from '../../../globals/colors';
-import LoginInput from './LoginInput';
-import { Storager } from '../../../globals/StorageManager';
-import AuxLinks from './AuxLinks';
-import RememberMe from './RememberMe';
-import { Api } from '../../../globals/Api';
 import { useNavigate } from 'react-router-dom';
+
+import { LockOutlined } from '@mui/icons-material';
+import { Avatar, Box, Button, Grid, Paper, Typography } from '@mui/material';
+
+import { Api } from '../../../globals/Api';
+import colors from '../../../globals/colors';
+import { Storager } from '../../../globals/StorageManager';
 import Loading from '../../../sharedComponents/Loading';
+import AuxLinks from './AuxLinks';
+import Copyright from './Copyright';
+import LoginInput from './LoginInput';
+import RememberMe from './RememberMe';
 
 interface Data {
   user: {

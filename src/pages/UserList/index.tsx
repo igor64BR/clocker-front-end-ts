@@ -15,29 +15,38 @@ import colors from '../../globals/colors';
 import { scrollBarConfigs } from '../../globals/ScrollBarConfigs';
 import IconedButton from '../../sharedComponents/IconedButton';
 import Loading from '../../sharedComponents/Loading';
+import FormModal from './components/FormModal';
 import SearchBox from './components/SearchBox';
 
-class User {
+export interface User {
   id: string;
   userName: string;
   email: string;
-
-  constructor(id: string, userName: string, email: string) {
-    this.id = id;
-    this.userName = userName;
-    this.email = email;
-  }
 }
 
 export default function UserList() {
   const [data, setData] = useState<User[]>([]);
+  const [currentUser, setCurrentUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [modalUserId, setModalUserId] = useState<string>();
+  const [modalTitle, setModalTitle] = useState('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
     void Api.get('Authorization/', setData, setIsLoading);
   }, []);
+
+  const openModal = async (modalTitle: string, userId?: string) => {
+    setModalTitle(modalTitle);
+
+    if (userId) await Api.get('Authorization/' + userId.toString(), setCurrentUser);
+    else setCurrentUser(undefined);
+
+    setModalIsOpen(true);
+  };
 
   if (isLoading) return <Loading />;
 
@@ -46,7 +55,13 @@ export default function UserList() {
       <ListItem
         secondaryAction={
           <Stack direction={'row'} spacing={2}>
-            <IconButton edge='end' aria-label='delete' onClick={() => navigate('./Form/' + u.id)}>
+            <IconButton
+              edge='end'
+              aria-label='delete'
+              onClick={() => {
+                void openModal('Editar usuário', u.id);
+              }}
+            >
               <Edit />
             </IconButton>
             <IconButton
@@ -74,7 +89,12 @@ export default function UserList() {
   return (
     <Stack direction='column' width={'100%'} height={'100%'} justifyContent={'space-evenly'}>
       <Stack direction='row' alignItems='center'>
-        <IconedButton label='Adicionar' onClick={() => navigate('./Form')}>
+        <IconedButton
+          label='Adicionar'
+          onClick={() => {
+            void openModal('Criar novo usuário');
+          }}
+        >
           <Add color='secondary' fontSize='small' />
         </IconedButton>
         <SearchBox />
@@ -90,6 +110,12 @@ export default function UserList() {
       >
         {users}
       </List>
+      <FormModal
+        isOpen={modalIsOpen}
+        onClose={() => setModalIsOpen(false)}
+        currentUser={currentUser}
+        formTitle={modalTitle}
+      />
     </Stack>
   );
 }
