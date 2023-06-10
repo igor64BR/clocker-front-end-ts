@@ -20,7 +20,7 @@ import SearchBox from './components/SearchBox';
 
 export interface User {
   id: string;
-  userName: string;
+  name: string;
   email: string;
 }
 
@@ -30,7 +30,6 @@ export default function UserList() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  // const [modalUserId, setModalUserId] = useState<string>();
   const [modalTitle, setModalTitle] = useState('');
 
   const navigate = useNavigate();
@@ -79,7 +78,7 @@ export default function UserList() {
             <ImageIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={u.userName} secondary={u.email} />
+        <ListItemText primary={u.name} secondary={u.email} />
       </ListItem>
 
       <Divider sx={{ bgcolor: colors.gold }} />

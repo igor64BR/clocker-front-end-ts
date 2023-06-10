@@ -10,6 +10,7 @@ interface Props {
   labelColor: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  error?: boolean;
 }
 
 export default function InputField({
@@ -20,9 +21,11 @@ export default function InputField({
   labelColor,
   value,
   onChange,
+  error,
 }: Props) {
   return (
     <TextField
+      error={error}
       label={label}
       aria-label={label}
       variant={variant}

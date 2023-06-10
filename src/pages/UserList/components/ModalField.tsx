@@ -11,6 +11,7 @@ interface Props {
 export default function ModalField({ label, value, onChange, type }: Props) {
   return (
     <InputField
+      error={!value}
       label={label}
       variant='filled'
       required

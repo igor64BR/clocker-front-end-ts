@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { Box, Button, Modal, Stack, Typography } from '@mui/material';
 
+import { User } from '../';
 import ModalField from './ModalField';
-import { User } from '..';
+import { Api } from '../../../globals/Api';
+import { toastEmitter } from '../../../sharedComponents/Toaster';
+import FormUserInput from '../DTOs/FormUserInput';
 
 interface Props {
   isOpen: boolean;
@@ -13,6 +16,8 @@ interface Props {
 }
 
 export default function FormModal({ currentUser, isOpen, onClose, formTitle }: Props) {
+  const [response, setResponse] = useState<{ id: string }>();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +25,7 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
 
   useEffect(() => {
     if (currentUser) {
-      setName(currentUser.userName);
+      setName(currentUser.name);
       setEmail(currentUser.email);
     } else {
       setName('');
@@ -30,9 +35,26 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
     setConfirmPassword('');
   }, [currentUser]);
 
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (password !== confirmPassword) {
+      toastEmitter.error('As senhas devem estar iguais');
+      return;
+    }
+
+    const body = new FormUserInput(name, email, password);
+
+    if (currentUser) await Api.put('Authorization/' + currentUser.id, body, setResponse);
+    else await Api.post('Authorization/', body, setResponse);
+
+    onClose();
+    window.location.reload();
+  }
+
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <Box component='form' onSubmit={() => {}}>
+      <Box component='form' onSubmit={handleSubmit}>
         <Stack
           direction='column'
           spacing={2}
@@ -49,18 +71,25 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
             p: 4,
           }}
         >
-          <Typography>{formTitle}</Typography>
+          <Typography variant='h5'>{formTitle}</Typography>
           <ModalField label='Nome' value={name} onChange={(e) => setName(e.target.value)} />
-          <ModalField label='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+          <ModalField
+            label='Email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type='email'
+          />
           <ModalField
             label='Senha'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            type='password'
           />
           <ModalField
             label='Confirmação de senha'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            type='password'
           />
 
           <Button type='submit' color='secondary' variant='contained'>

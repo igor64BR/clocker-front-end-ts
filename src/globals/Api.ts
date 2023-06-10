@@ -1,5 +1,6 @@
 import { Storager } from './StorageManager';
 import { toastEmitter } from '../sharedComponents/Toaster';
+import translate from './Translate';
 
 interface ResponseData {
   data?: any;
@@ -74,12 +75,18 @@ async function sendRequest(
       body: body ? JSON.stringify(body) : null,
     });
 
-    const data: ResponseData = await response.json();
+    if (response.status === 403) {
+      toastEmitter.error('Você não possui permissão para essa ação');
+    } else if (response.status === 401) {
+      window.location.href = '/login';
+    } else {
+      const data: ResponseData = await response.json();
 
-    if (response.ok) setData(data.data);
-    else data.errors?.forEach((error) => toastEmitter.error(error));
+      if (response.ok) setData(data.data);
+      else data.errors?.forEach(async (error) => toastEmitter.error(await translate(error)));
+    }
   } catch (errors) {
-    if (errors instanceof TypeError) toastEmitter.error('Ocorreu um erro inesperado');
+    toastEmitter.error('Ocorreu um erro inesperado');
   }
 
   setIsLoading?.(false);
