@@ -23,8 +23,9 @@ async function get(
   endpoint: string,
   setData: (data: any) => void,
   setIsLoading?: (isLoading: boolean) => void,
+  params?: any,
 ) {
-  await sendRequest('GET', endpoint, null, setData, setIsLoading);
+  await sendRequest('GET', endpoint, null, setData, setIsLoading, params);
 }
 
 async function post(
@@ -60,10 +61,17 @@ async function sendRequest(
   body: any | null,
   setData: (data: ResponseData) => void,
   setIsLoading?: (isLoading: boolean) => void,
+  params?: any,
 ) {
   const token = Storager.token.get();
 
   setIsLoading?.(true);
+
+  if (params) {
+    const filterParams = new URLSearchParams(params);
+    const queryString = filterParams.toString();
+    endpoint += '?' + queryString;
+  }
 
   try {
     const response = await fetch(getApiUrl(endpoint), {

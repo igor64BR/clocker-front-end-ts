@@ -4,7 +4,11 @@ import { Box, Stack } from '@mui/material';
 import colors from '../../../globals/colors';
 import { useState } from 'react';
 
-export default function SearchBox() {
+interface Params {
+  onSearch: (name: string) => void;
+}
+
+export default function SearchBox({ onSearch }: Params) {
   const [userName, setUserName] = useState<string>();
 
   return (
@@ -19,7 +23,11 @@ export default function SearchBox() {
             inputProps={{ 'aria-label': 'search' }}
             sx={{ width: 150 }}
             value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setUserName(value);
+              onSearch(value);
+            }}
           />
         </Stack>
       </Box>

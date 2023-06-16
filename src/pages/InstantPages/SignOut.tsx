@@ -7,6 +7,7 @@ export default function SignOut() {
 
   useEffect(() => {
     Storager.token.clear();
+    if (!Storager.rememberUser.get()) Storager.user.clear();
     navigate('/Login');
   });
 

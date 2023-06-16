@@ -61,5 +61,5 @@ class TokenStorageManager extends BaseStorageManager<string> {
 export const Storager = {
   token: new TokenStorageManager('token'),
   rememberUser: new BaseStorageManager<boolean>('rememberUser'),
-  user: new BaseStorageManager<{ email: string }>('user'),
+  user: new BaseStorageManager<{ email: string; id: string }>('user'),
 };

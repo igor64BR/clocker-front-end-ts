@@ -38,11 +38,9 @@ export default function LoginForm() {
     if (!data) return;
 
     Storager.rememberUser.set(rememberUser);
-
-    if (rememberUser) Storager.user.set({ email });
-    else Storager.user.clear();
-
+    Storager.user.set({ email, id: data.user.id });
     Storager.token.set(data.token);
+
     navigate('/');
   }, [data]);
 
