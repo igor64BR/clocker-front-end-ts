@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Card, Stack } from '@mui/material';
-import { Storager } from '../../globals/StorageManager';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import BgImg from './components/BgImg';
+import { Storager } from '../../../globals/StorageManager';
 
 export default function Layout() {
   const { token } = Storager;

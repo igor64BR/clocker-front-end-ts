@@ -4,36 +4,32 @@ import colors from '../../globals/colors';
 
 interface Props {
   label: string;
-  variant: 'filled' | 'outlined' | 'standard';
+  variant?: 'filled' | 'outlined' | 'standard';
   required?: boolean;
   type?: string;
-  labelColor: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  labelColor?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   error?: boolean;
+  readonly?: boolean;
 }
 
-export default function InputField({
-  label,
-  variant,
-  required,
-  type,
-  labelColor,
-  value,
-  onChange,
-  error,
-}: Props) {
+export default function InputField(props: Props) {
   return (
     <TextField
-      error={error}
-      label={label}
-      aria-label={label}
-      variant={variant}
-      required={required}
-      type={type}
-      InputLabelProps={{ style: { color: labelColor ?? colors.black } }}
-      value={value}
-      onChange={(e) => onChange(e)}
+      error={props.error}
+      label={props.label}
+      aria-label={props.label}
+      variant={props.variant ?? 'filled'}
+      required={props.required}
+      type={props.type}
+      InputLabelProps={{ style: { color: props.labelColor ?? colors.black } }}
+      value={props.value}
+      onChange={props.onChange}
+      InputProps={{
+        readOnly: props.readonly,
+        className: props.readonly ? 'Mui-disabled' : undefined,
+      }}
     />
   );
 }

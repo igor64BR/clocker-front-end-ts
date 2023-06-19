@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import bgImg from '../../../../assets/img/background.jpg';
+import bgImg from '../../../../../assets/img/background.jpg';
 
 export default function BgImg() {
   return (

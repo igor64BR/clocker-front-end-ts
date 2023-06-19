@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { menuButtons } from '../pages';
-import colors from '../../../../../globals/colors';
+import colors from '../../../../../../globals/colors';
 
 export default function LargeMenu() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import { Tooltip, IconButton, Box, Menu, MenuItem, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import logo from '../../../../../assets/img/logo-no-name.png';
-import colors from '../../../../../globals/colors';
+import logo from '../../../../../../assets/img/logo-no-name.png';
+import colors from '../../../../../../globals/colors';
 import { userButtons } from '../pages';
 import { useNavigate } from 'react-router-dom';
 
