@@ -1,4 +1,5 @@
-import { TextField } from '@mui/material';
+import { Theme } from '@emotion/react';
+import { SxProps, TextField } from '@mui/material';
 
 import colors from '../../globals/colors';
 
@@ -11,7 +12,9 @@ interface Props {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   error?: boolean;
+  fullWidth?: boolean;
   readonly?: boolean;
+  sx?: SxProps<Theme>;
 }
 
 export default function InputField(props: Props) {
@@ -30,6 +33,8 @@ export default function InputField(props: Props) {
         readOnly: props.readonly,
         className: props.readonly ? 'Mui-disabled' : undefined,
       }}
+      sx={props.sx}
+      fullWidth={props.fullWidth}
     />
   );
 }

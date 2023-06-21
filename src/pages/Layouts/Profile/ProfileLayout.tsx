@@ -12,6 +12,7 @@ export interface Response {
   user: {
     id: string;
     name: string;
+    address: string;
     userName: string;
     email: string;
     phoneNumber: string;
@@ -22,7 +23,6 @@ export interface Response {
 export default function ProfileLayout() {
   const [currentUser, setCurrentUser] = useState<Response>();
   const [isLoading, setIsLoading] = useState(true);
-  const [pageTitle, setPageTitle] = useState('');
 
   useEffect(() => {
     void Api.get('Authorization/CurrentUser', setCurrentUser, setIsLoading);

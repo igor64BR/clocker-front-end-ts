@@ -14,13 +14,18 @@ interface Props {
 export default function SideBar({ user }: Props) {
   const iconStyle = { border: 'solid 1.8px black', borderRadius: '50%' };
 
+  const roles =
+    user?.roles.length !== undefined && user?.roles.length > 0
+      ? user?.roles.join(', ')
+      : 'Sem cargo';
+
   return (
     <Stack direction='column' spacing={1} width={'25%'} mr={3}>
       <Stack direction='row' spacing={2}>
         <Avatar>
           <Image />
         </Avatar>
-        <ListItemText primary={user?.user.name} secondary={user?.user.email} />
+        <ListItemText primary={user?.user.name} secondary={roles} sx={{ flexShrink: 1 }} />
       </Stack>
       <Divider />
       <SideBarListItem icon={<PersonOutlineIcon sx={iconStyle} />}>
