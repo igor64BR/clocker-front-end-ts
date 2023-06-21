@@ -1,10 +1,16 @@
 import { Stack } from '@mui/material';
 
 import AppButton from '../../../sharedComponents/AppButton';
+import Loading from '../../../sharedComponents/Loading';
 
-export default function ButtonGrid() {
+interface Props {
+  isLoading: boolean;
+}
+
+export default function ButtonGrid(props: Props) {
   return (
-    <Stack direction={'row'} justifyContent={'flex-end'} width={'100%'}>
+    <Stack direction={'row'} justifyContent={'flex-end'} width={'100%'} spacing={2}>
+      <Stack>{props.isLoading ? <Loading /> : null}</Stack>
       <Stack direction={'row'} spacing={2}>
         <AppButton
           label='Salvar'

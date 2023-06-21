@@ -31,9 +31,6 @@ export default function SideBar({ user }: Props) {
       <SideBarListItem icon={<PersonOutlineIcon sx={iconStyle} />}>
         Informações Pessoais
       </SideBarListItem>
-      <SideBarListItem icon={<LockPersonOutlined sx={iconStyle} />}>
-        Segurança da conta
-      </SideBarListItem>
     </Stack>
   );
 }

@@ -25,8 +25,13 @@ export default async function translate(text: string) {
     }),
   };
 
-  const response = await fetch(url, options);
-  const result = await response.text();
-  const obj = JSON.parse(result);
-  return (obj as TranslatedObject).data.translations[0].translatedText;
+  try {
+    const response = await fetch(url, options);
+    const result = await response.text();
+    const obj = JSON.parse(result);
+
+    return (obj as TranslatedObject).data.translations[0].translatedText;
+  } catch {
+    return text;
+  }
 }

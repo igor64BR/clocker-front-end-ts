@@ -9,19 +9,11 @@ interface ResponseData {
 
 const apiUrl: string = 'https://localhost:44379/';
 
-export const Api = {
-  apiUrl,
-  get,
-  post,
-  put,
-  del,
-};
-
 const getApiUrl = (endpoint: string) => apiUrl + endpoint;
 
 async function get(
   endpoint: string,
-  setData: (data: any) => void,
+  setData?: (data: any) => void,
   setIsLoading?: (isLoading: boolean) => void,
   params?: any,
 ) {
@@ -31,7 +23,7 @@ async function get(
 async function post(
   endpoint: string,
   body: any,
-  setData: (data: any) => void,
+  setData?: (data: any) => void,
   setIsLoading?: (isLoading: boolean) => void,
 ) {
   await sendRequest('POST', endpoint, body, setData, setIsLoading);
@@ -40,7 +32,7 @@ async function post(
 async function put(
   endpoint: string,
   body: any,
-  setData: (data: any) => void,
+  setData?: (data: any) => void,
   setIsLoading?: (isLoading: boolean) => void,
 ) {
   await sendRequest('PUT', endpoint, body, setData, setIsLoading);
@@ -49,7 +41,7 @@ async function put(
 async function del(
   endpoint: string,
   body: any,
-  setData: (data: any) => void,
+  setData?: (data: any) => void,
   setIsLoading?: (isLoading: boolean) => void,
 ) {
   await sendRequest('DELETE', endpoint, body, setData, setIsLoading);
@@ -59,7 +51,7 @@ async function sendRequest(
   method: string,
   endpoint: string,
   body: any | null,
-  setData: (data: ResponseData) => void,
+  setData?: (data: ResponseData) => void,
   setIsLoading?: (isLoading: boolean) => void,
   params?: any,
 ) {
@@ -90,7 +82,7 @@ async function sendRequest(
     } else {
       const data: ResponseData = await response.json();
 
-      if (response.ok) setData(data.data);
+      if (response.ok) setData?.(data.data);
       else data.errors?.forEach(async (error) => toastEmitter.error(await translate(error)));
     }
   } catch (errors) {
@@ -99,3 +91,11 @@ async function sendRequest(
 
   setIsLoading?.(false);
 }
+
+export const Api = {
+  apiUrl,
+  get,
+  post,
+  put,
+  del,
+};
