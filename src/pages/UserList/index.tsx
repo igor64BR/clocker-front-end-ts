@@ -13,6 +13,7 @@ import Header from './components/Header';
 import UserCard from './components/UserCard';
 
 export interface User {
+  permission: string;
   id: string;
   name: string;
   email: string;

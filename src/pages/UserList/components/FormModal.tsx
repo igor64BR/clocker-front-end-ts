@@ -4,10 +4,12 @@ import { Box, Button, Modal, Stack, Typography } from '@mui/material';
 
 import { User } from '../';
 import { Api } from '../../../globals/Api';
+import colors from '../../../globals/colors';
 import PhoneTextInput from '../../../sharedComponents/PhoneTextInput';
 import { toastEmitter } from '../../../sharedComponents/Toaster';
 import FormUserInput from '../DTOs/FormUserInput';
 import ModalField from './ModalField';
+import PermissionList from './PermissionList';
 
 interface Props {
   isOpen: boolean;
@@ -27,17 +29,21 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const [permission, setPermission] = useState('');
+
   useEffect(() => {
     if (currentUser) {
       setName(currentUser.name);
       setEmail(currentUser.email);
       setPhoneNumber(currentUser.phoneNumber);
       setAddress(currentUser.address);
+      setPermission(currentUser.permission);
     } else {
       setName('');
       setEmail('');
       setPhoneNumber('');
       setAddress('');
+      setPermission('');
     }
     setPassword('');
     setConfirmPassword('');
@@ -51,7 +57,7 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
       return;
     }
 
-    const body = new FormUserInput(name, email, password, phoneNumber, address);
+    const body = new FormUserInput(name, email, password, phoneNumber, address, permission);
 
     if (currentUser) await Api.put('Authorization/' + currentUser.id, body, setResponse);
     else await Api.post('Authorization/', body, setResponse);
@@ -79,7 +85,16 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
             p: 4,
           }}
         >
-          <Typography variant='h5'>{formTitle}</Typography>
+          <Stack
+            direction={'row'}
+            spacing={2}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+          >
+            <Typography variant='h5'>{formTitle}</Typography>
+            <PermissionList value={permission} setValue={setPermission} />
+          </Stack>
+
           <ModalField label='Nome' value={name} onChange={(e) => setName(e.target.value)} />
           <ModalField
             label='Email'
@@ -114,7 +129,9 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
           />
 
           <Button type='submit' color='secondary' variant='contained'>
-            <Typography>Salvar</Typography>
+            <Typography fontWeight={'bold'} color={colors.white}>
+              Salvar
+            </Typography>
           </Button>
         </Stack>
       </Box>

@@ -5,5 +5,6 @@ export default class FormUserInput {
     public password: string,
     public phoneNumber: string,
     public address: string,
+    public permissionName: string,
   ) {}
 }
