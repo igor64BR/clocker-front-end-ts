@@ -16,6 +16,9 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  address: string;
+  phoneNumber: string;
+  userName: string;
 }
 
 export default function UserList() {
@@ -42,7 +45,7 @@ export default function UserList() {
   };
 
   const searchUser = (userName: string) => {
-    void Api.get('Authorization/', setData, setIsLoading, {
+    void Api.get('Authorization', setData, undefined, {
       q: userName,
     });
   };

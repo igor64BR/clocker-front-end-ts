@@ -3,10 +3,11 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Box, Button, Modal, Stack, Typography } from '@mui/material';
 
 import { User } from '../';
-import ModalField from './ModalField';
 import { Api } from '../../../globals/Api';
+import PhoneTextInput from '../../../sharedComponents/PhoneTextInput';
 import { toastEmitter } from '../../../sharedComponents/Toaster';
 import FormUserInput from '../DTOs/FormUserInput';
+import ModalField from './ModalField';
 
 interface Props {
   isOpen: boolean;
@@ -16,10 +17,13 @@ interface Props {
 }
 
 export default function FormModal({ currentUser, isOpen, onClose, formTitle }: Props) {
-  const [response, setResponse] = useState<{ id: string }>();
+  const [, setResponse] = useState<{ id: string }>();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -27,9 +31,13 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
     if (currentUser) {
       setName(currentUser.name);
       setEmail(currentUser.email);
+      setPhoneNumber(currentUser.phoneNumber);
+      setAddress(currentUser.address);
     } else {
       setName('');
       setEmail('');
+      setPhoneNumber('');
+      setAddress('');
     }
     setPassword('');
     setConfirmPassword('');
@@ -43,7 +51,7 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
       return;
     }
 
-    const body = new FormUserInput(name, email, password);
+    const body = new FormUserInput(name, email, password, phoneNumber, address);
 
     if (currentUser) await Api.put('Authorization/' + currentUser.id, body, setResponse);
     else await Api.post('Authorization/', body, setResponse);
@@ -79,6 +87,19 @@ export default function FormModal({ currentUser, isOpen, onClose, formTitle }: P
             onChange={(e) => setEmail(e.target.value)}
             type='email'
           />
+          <PhoneTextInput
+            label='Número de telefone'
+            value={phoneNumber}
+            setValue={setPhoneNumber}
+            fullWidth
+            required
+          />
+          <ModalField
+            label='Endereço'
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+
           <ModalField
             label='Senha'
             value={password}

@@ -1,11 +1,9 @@
 export default class FormUserInput {
-  userName: string;
-  email: string;
-  password: string;
-
-  constructor(userName: string, email: string, password: string) {
-    this.userName = userName;
-    this.email = email;
-    this.password = password;
-  }
+  constructor(
+    public userName: string,
+    public email: string,
+    public password: string,
+    public phoneNumber: string,
+    public address: string,
+  ) {}
 }
