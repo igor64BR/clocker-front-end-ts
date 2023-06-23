@@ -9,7 +9,7 @@ interface Params {
 }
 
 export default function SearchBox({ onSearch }: Params) {
-  const [userName, setUserName] = useState<string>();
+  const [userName, setUserName] = useState('');
 
   return (
     <Stack direction='row' width={'5%'} py={2} justifyContent='flex-end' sx={{ width: '100%' }}>
